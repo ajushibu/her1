@@ -370,18 +370,18 @@
     .insight-card-body { font-size:13px; color:var(--text3); line-height:1.6; font-style:italic; font-family:'Fraunces',serif; }
 
     .action-card {
-      background:var(--bg3);
-      border:1px solid var(--border2);
+      background:linear-gradient(135deg,#2a1810 0%,#1e1208 100%);
+      border:1px solid #5a2e18;
       border-radius:14px;
-      padding:16px 18px;
-      margin-bottom:8px;
+      padding:18px 20px;
+      margin-bottom:10px;
       display:flex;
-      gap:12px;
+      gap:14px;
       align-items:flex-start;
     }
 
-    .action-dot { width:6px; height:6px; background:var(--terra); border-radius:50%; margin-top:5px; flex-shrink:0; }
-    .action-text { font-size:14px; color:var(--cream2); line-height:1.6; }
+    .action-dot { width:8px; height:8px; background:var(--terra); border-radius:50%; margin-top:5px; flex-shrink:0; }
+    .action-text { font-size:15px; color:var(--cream); line-height:1.65; font-family:'Fraunces',serif; font-style:italic; font-weight:300; }
 
     .generate-btn {
       width:100%;
@@ -497,21 +497,23 @@
 
   <!-- ── Insight ── -->
   <div id="view-insight" style="display:none" class="insight-view">
-    <div class="insight-hero">
+    <button class="generate-btn" id="generate-btn" onclick="generateInsight()">Generate insight from log</button>
+
+    <!-- Actions first — most important -->
+    <div class="insight-section" id="insight-actions-section" style="display:none">
+      <div class="insight-section-label" style="color:var(--terra);letter-spacing:2px;">Do these</div>
+      <div id="insight-actions"></div>
+    </div>
+
+    <!-- Persona -->
+    <div class="insight-hero" style="margin-bottom:20px;">
       <div class="insight-hero-label">Who she is</div>
       <div id="insight-persona" class="insight-hero-empty">Once you've captured a few things, this will build a picture of who she is — her patterns, what she needs, what matters to her.</div>
     </div>
 
-    <button class="generate-btn" id="generate-btn" onclick="generateInsight()">Generate insight from log</button>
-
     <div class="insight-section" id="insight-patterns-section" style="display:none">
       <div class="insight-section-label">Patterns</div>
       <div id="insight-patterns"></div>
-    </div>
-
-    <div class="insight-section" id="insight-actions-section" style="display:none">
-      <div class="insight-section-label">Things to put into action</div>
-      <div id="insight-actions"></div>
     </div>
 
     <div class="insight-section" id="insight-watch-section" style="display:none">
@@ -815,10 +817,10 @@ Respond ONLY with valid JSON, no extra text:
 }
 
 Rules:
-- Extract all dates (festivals, plans, outings, family events, visits)
-- If timing implied but no exact date, estimate YYYY-MM-DD
+- Calendar entries ONLY when there is an explicit date, plan, event, or festival mentioned. Do NOT create calendar entries for general observations about her personality, feelings, or behaviour.
+- If no specific date or event is mentioned, actions array should be empty or contain only a note
 - Festivals without year → use 2026
-- Emotionally significant things → note
+- Emotionally significant things, personality observations, things she said → note
 - Always write a logEntry
 - followupQuestion: only ask if a key piece of info is missing that would significantly change how you handle this. Most inputs won't need a followup. ${skipFollowup ? 'Do NOT ask a followup question this time.' : ''}
 - Be concise and warm`;
