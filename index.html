@@ -961,7 +961,7 @@ Rules:
     if (pdfB64) blocks.push({ type: 'document', source: { type: 'base64', media_type: 'application/pdf', data: pdfB64 } });
     if ((imgB64 || pdfB64) && !text) blocks.push({ type: 'text', text: 'Read this carefully and extract all relevant information.' });
 
-    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+    const resp = await fetch('/api/proxy', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'x-api-key': key, 'anthropic-version': '2023-06-01' },
       body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 1000, system: sys, messages: [{ role: 'user', content: blocks }] })
