@@ -535,12 +535,14 @@
     </div>
 
     <div class="setting-block">
-      <span class="field-label">People in your life</span>
+      <span class="field-label">Your context</span>
       <div class="setting-card">
-        <p class="setting-desc">Describe the recurring people in your life. Claude uses this as context when you capture things.</p>
-        <textarea class="setting-textarea" id="people-input" placeholder="Chin — my partner, from Andhra Pradesh. Her family follows Hindu festivals closely. Her mum is very important to her. She is close with her cousin Priya.
+        <p class="setting-desc">Anything Claude should know about your life, relationship, and situation. People, history, cultural context, recurring dynamics — all of it helps.</p>
+        <textarea class="setting-textarea" id="people-input" placeholder="Chin is my partner. We got recently engaged. She is Telugu, her family follows Hindu festivals closely — Diwali, Ugadi, Dasara are important to them. Her mum is very close to her.
 
-Mum — my mother, lives in Thrissur. Calls every Sunday."></textarea>
+We are currently long distance — she is in Kerala, I am moving to Launceston, Australia for work as a doctor.
+
+I have a habit of not fully paying attention when she talks. I am trying to be more present and intentional."></textarea>
         <button class="setting-save" onclick="savePeople()">Save</button>
       </div>
     </div>
@@ -800,7 +802,7 @@ Mum — my mother, lives in Thrissur. Calls every Sunday."></textarea>
   async function callClaude(text, key, skipFollowup=false) {
     const today = new Date().toDateString();
     const people = getPeople();
-    const peopleContext = people ? `\n\nPeople in his life:\n${people}` : '';
+    const peopleContext = people ? `\n\nContext about his life and relationship:\n${people}` : '';
 
     const sys = `You are a quiet assistant helping someone be more present for his partner Chin. He captures things she tells him so he does not forget. Today is ${today}.${peopleContext}
 
@@ -862,7 +864,7 @@ Rules:
 Observations:
 ${entries}
 
-${people ? `Context about people in his life:\n${people}` : ''}
+${people ? `Context about his life and relationship:\n${people}` : ''}
 
 Respond ONLY with valid JSON:
 {
