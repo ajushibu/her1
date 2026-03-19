@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="theme-color" content="#161412" />
+  <title>Her</title>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:       #161412;
+      --bg2:      #1d1a17;
+      --bg3:      #242018;
+      --surface:  #1f1c18;
+      --border:   #2e2a24;
+      --border2:  #3d3830;
+      --cream:    #ede8df;
+      --cream2:   #c8bfaf;
+      --cream3:   #8a7f6e;
+      --terra:    #b85c2a;
+      --terra2:   #d06a32;
+      --muted:    #5a5248;
+      --text:     #ede8df;
+      --text2:    #c8bfaf;
+      --text3:    #6e6458;
+      --green:    #5a7a4a;
+      --green2:   #7a9a68;
+      --r:        18px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+    html, body { height: 100%; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', system-ui, sans-serif;
+      font-weight: 300;
+      min-height: 100dvh;
+      overflow-x: hidden;
+    }
+
+    /* Subtle warm radial */
+    body::after {
+      content: '';
+      position: fixed;
+      top: -300px; right: -300px;
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, #b85c2a0d 0%, transparent 65%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .app {
+      max-width: 430px;
+      margin: 0 auto;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── Header ─────────────────────────────────────────────── */
+    .header {
+      padding: 52px 26px 20px;
+    }
+
+    .wordmark {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 44px;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--cream);
+      letter-spacing: -1.5px;
+      line-height: 1;
+      margin-bottom: 5px;
+    }
+
+    .wordmark-dot {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      background: var(--terra);
+      border-radius: 50%;
+      margin-left: 2px;
+      vertical-align: middle;
+      margin-bottom: 8px;
+    }
+
+    .header-sub {
+      font-size: 12px;
+      color: var(--text3);
+      letter-spacing: 0.3px;
+      font-weight: 300;
+    }
+
+    /* ── Nav ─────────────────────────────────────────────────── */
+    .nav {
+      display: flex;
+      padding: 0 26px;
+      margin-bottom: 30px;
+      border-bottom: 1px solid var(--border);
+      gap: 24px;
+    }
+
+    .nav-tab {
+      background: none;
+      border: none;
+      color: var(--text3);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      padding: 10px 0;
+      cursor: pointer;
+      border-bottom: 1.5px solid transparent;
+      margin-bottom: -1px;
+      transition: all 0.18s;
+    }
+
+    .nav-tab.active {
+      color: var(--cream2);
+      border-bottom-color: var(--terra);
+    }
+
+    /* ── Capture ─────────────────────────────────────────────── */
+    .capture-view { padding: 0 26px; flex: 1; }
+
+    .field-label {
+      font-size: 10px;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: var(--text3);
+      font-weight: 500;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .input-wrap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 20px 20px 16px;
+      margin-bottom: 12px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      position: relative;
+    }
+
+    .input-wrap:focus-within {
+      border-color: #4a3a2c;
+      box-shadow: 0 0 0 4px #b85c2a0a, inset 0 1px 0 #ffffff06;
+    }
+
+    textarea {
+      width: 100%;
+      background: none;
+      border: none;
+      color: var(--cream);
+      font-family: 'Fraunces', serif;
+      font-size: 19px;
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.7;
+      resize: none;
+      outline: none;
+      min-height: 112px;
+      letter-spacing: 0.1px;
+    }
+
+    textarea::placeholder {
+      color: var(--text3);
+      font-style: italic;
+      font-size: 17px;
+      line-height: 1.65;
+    }
+
+    /* ── Media row ───────────────────────────────────────────── */
+    .media-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .media-btn {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 16px 14px;
+      color: var(--text3);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.18s;
+    }
+
+    .media-btn:active, .media-btn.active {
+      background: var(--bg3);
+      border-color: var(--border2);
+      color: var(--cream2);
+    }
+
+    .media-btn.recording {
+      border-color: var(--terra);
+      color: var(--terra2);
+    }
+
+    /* Icon - simple SVG inline */
+    .btn-icon {
+      width: 16px;
+      height: 16px;
+      opacity: 0.6;
+      flex-shrink: 0;
+    }
+
+    .media-btn.active .btn-icon,
+    .media-btn.recording .btn-icon { opacity: 1; }
+
+    /* ── Image preview ───────────────────────────────────────── */
+    .img-preview-wrap {
+      position: relative;
+      border-radius: var(--r);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      margin-bottom: 12px;
+    }
+
+    .img-preview-wrap img {
+      width: 100%;
+      max-height: 180px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .img-remove {
+      position: absolute;
+      top: 10px; right: 10px;
+      background: #00000090;
+      border: none;
+      color: var(--cream);
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 11px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .pdf-indicator {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 14px 18px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-Content: space-between;
+      color: var(--text2);
+      font-size: 13px;
+    }
+
+    /* ── Voice indicator ─────────────────────────────────────── */
+    .voice-bar {
+      background: var(--surface);
+      border: 1px solid var(--border2);
+      border-radius: var(--r);
+      padding: 14px 18px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .bars {
+      display: flex;
+      gap: 3px;
+      align-items: center;
+      height: 20px;
+    }
+
+    .bar {
+      width: 2px;
+      background: var(--terra);
+      border-radius: 1px;
+      animation: barwave 0.9s ease-in-out infinite;
+    }
+
+    .bar:nth-child(1) { height: 6px;  animation-delay: 0s; }
+    .bar:nth-child(2) { height: 14px; animation-delay: 0.1s; }
+    .bar:nth-child(3) { height: 10px; animation-delay: 0.2s; }
+    .bar:nth-child(4) { height: 18px; animation-delay: 0.3s; }
+    .bar:nth-child(5) { height: 8px;  animation-delay: 0.4s; }
+
+    @keyframes barwave {
+      0%, 100% { transform: scaleY(1); opacity: 0.7; }
+      50%       { transform: scaleY(0.35); opacity: 1; }
+    }
+
+    .voice-label {
+      flex: 1;
+      font-size: 13px;
+      color: var(--text2);
+      letter-spacing: 0.3px;
+    }
+
+    .voice-done {
+      background: none;
+      border: 1px solid var(--border2);
+      color: var(--text2);
+      border-radius: 8px;
+      padding: 5px 12px;
+      font-size: 11px;
+      font-family: 'DM Sans', sans-serif;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    /* ── Processing ──────────────────────────────────────────── */
+    .processing {
+      padding: 24px 0 12px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .spinner {
+      width: 16px; height: 16px;
+      border: 1.5px solid var(--border2);
+      border-top-color: var(--terra);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      flex-shrink: 0;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .processing-label {
+      font-size: 13px;
+      color: var(--text3);
+      letter-spacing: 0.3px;
+    }
+
+    /* ── Result ──────────────────────────────────────────────── */
+    .result {
+      background: var(--bg3);
+      border: 1px solid var(--border2);
+      border-radius: var(--r);
+      padding: 18px;
+      margin-bottom: 14px;
+      animation: fadeup 0.25s ease;
+    }
+
+    @keyframes fadeup {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .result-summary {
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-size: 16px;
+      font-weight: 300;
+      color: var(--cream2);
+      line-height: 1.6;
+      margin-bottom: 14px;
+    }
+
+    .result-items {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      border-top: 1px solid var(--border);
+      padding-top: 12px;
+    }
+
+    .result-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 12px;
+      color: var(--text3);
+      letter-spacing: 0.2px;
+      line-height: 1.5;
+    }
+
+    .result-item-dot {
+      width: 4px;
+      height: 4px;
+      background: var(--terra);
+      border-radius: 50%;
+      margin-top: 6px;
+      flex-shrink: 0;
+    }
+
+    /* ── CTA button ──────────────────────────────────────────── */
+    .cta-wrap {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 32px;
+    }
+
+    .cta {
+      background: #3a1f10;
+      border: 1px solid #5a2e18;
+      border-radius: 40px;
+      padding: 12px 36px;
+      color: #e8a07a;
+      font-family: 'DM Sans', sans-serif;
+      font-style: normal;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.12s;
+    }
+
+    .cta:hover   { background: #4a2814; border-color: #7a3e22; color: #f0b090; }
+    .cta:active  { transform: scale(0.97); }
+    .cta:disabled { opacity: 0.35; cursor: default; }
+
+    /* ── Log view ────────────────────────────────────────────── */
+    .log-view { padding: 0 26px; flex: 1; }
+
+    .log-empty {
+      padding: 64px 0;
+      text-align: center;
+      color: var(--text3);
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-size: 17px;
+      line-height: 1.8;
+    }
+
+    .log-entry {
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+      animation: fadeup 0.25s ease;
+    }
+
+    .log-entry:first-child { border-top: 1px solid var(--border); }
+
+    .log-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .log-date {
+      font-size: 11px;
+      color: var(--text3);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .log-badge {
+      font-size: 10px;
+      color: var(--terra);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    .log-body {
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-size: 16px;
+      font-weight: 300;
+      color: var(--cream2);
+      line-height: 1.65;
+      margin-bottom: 10px;
+    }
+
+    .log-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .log-tag {
+      font-size: 10px;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--text3);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 3px 9px;
+    }
+
+    .log-tag.cal  { color: var(--green2);  border-color: #3a4e2e; }
+    .log-tag.note { color: #a07840; border-color: #3e301a; }
+
+    /* ── Settings ────────────────────────────────────────────── */
+    .settings-view { padding: 0 26px; }
+
+    .setting-block { margin-bottom: 28px; }
+
+    .setting-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 18px;
+    }
+
+    .setting-desc {
+      font-size: 13px;
+      color: var(--text3);
+      line-height: 1.6;
+      margin-bottom: 14px;
+    }
+
+    .setting-input {
+      width: 100%;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      color: var(--cream2);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 300;
+      outline: none;
+      margin-bottom: 10px;
+      letter-spacing: 0.3px;
+    }
+
+    .setting-input:focus { border-color: var(--border2); }
+
+    .setting-save {
+      background: var(--terra);
+      border: none;
+      border-radius: 10px;
+      padding: 10px 20px;
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    .stat-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 11px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+    }
+
+    .stat-row:last-child { border-bottom: none; }
+    .stat-key   { color: var(--text3); }
+    .stat-val   { color: var(--cream2); font-variant-numeric: tabular-nums; }
+
+    .about-text {
+      font-size: 14px;
+      color: var(--text3);
+      line-height: 1.75;
+    }
+
+    /* ── Hidden input ────────────────────────────────────────── */
+    #file-input { display: none; }
+
+    /* ── Scrollbar ───────────────────────────────────────────── */
+    ::-webkit-scrollbar { width: 0; }
+
+    .safe-bottom { height: max(env(safe-area-inset-bottom), 20px); }
+  </style>
+</head>
+<body>
+<div class="app">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="wordmark">her<span class="wordmark-dot"></span></div>
+    <div class="header-sub" id="date-sub"></div>
+  </div>
+
+  <!-- Nav -->
+  <div class="nav">
+    <button class="nav-tab active" onclick="switchTab('capture')">Capture</button>
+    <button class="nav-tab"        onclick="switchTab('log')">Her log</button>
+    <button class="nav-tab"        onclick="switchTab('settings')">Settings</button>
+  </div>
+
+  <!-- ── Capture ───────────────────────────────────────────── -->
+  <div id="view-capture" class="capture-view">
+
+    <div class="input-wrap">
+      <span class="field-label">What do you want to remember?</span>
+      <textarea id="main-input" rows="4"
+        placeholder="She mentioned her cousin's wedding next month… going home this weekend… her mum's been unwell…"></textarea>
+    </div>
+
+    <div class="media-row">
+      <button class="media-btn" onclick="triggerUpload()">
+        <svg class="btn-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4">
+          <rect x="1" y="3" width="14" height="10" rx="1.5"/>
+          <circle cx="5.5" cy="7" r="1.5"/>
+          <path d="M1 11l3.5-3 3 3 2.5-2.5L15 11"/>
+        </svg>
+        Screenshot
+      </button>
+      <button class="media-btn" id="voice-btn" onclick="toggleVoice()">
+        <svg class="btn-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4">
+          <rect x="5" y="1" width="6" height="9" rx="3"/>
+          <path d="M2 8a6 6 0 0012 0"/>
+          <line x1="8" y1="14" x2="8" y2="16"/>
+          <line x1="5" y1="16" x2="11" y2="16"/>
+        </svg>
+        Voice
+      </button>
+    </div>
+
+    <input type="file" id="file-input" accept="image/*,application/pdf" onchange="handleFile(event)" />
+
+    <!-- Image preview -->
+    <div id="img-preview" style="display:none" class="img-preview-wrap">
+      <img id="preview-img" src="" alt="" />
+      <button class="img-remove" onclick="clearMedia()">✕</button>
+    </div>
+
+    <!-- PDF indicator -->
+    <div id="pdf-indicator" style="display:none" class="pdf-indicator">
+      <span>PDF attached</span>
+      <button class="img-remove" style="position:static;background:none;border:1px solid var(--border);width:auto;height:auto;padding:4px 10px;border-radius:8px;font-size:11px;" onclick="clearMedia()">Remove</button>
+    </div>
+
+    <!-- Voice indicator -->
+    <div id="voice-bar" style="display:none" class="voice-bar">
+      <div class="bars">
+        <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+        <div class="bar"></div><div class="bar"></div>
+      </div>
+      <span class="voice-label">Listening…</span>
+      <button class="voice-done" onclick="stopVoice()">Done</button>
+    </div>
+
+    <!-- Processing -->
+    <div id="processing" style="display:none" class="processing">
+      <div class="spinner"></div>
+      <span class="processing-label">Reading this for you…</span>
+    </div>
+
+    <!-- Result -->
+    <div id="result" style="display:none" class="result"></div>
+
+    <div class="cta-wrap"><button class="cta" id="cta" onclick="handleSend()">hold this</button></div>
+
+  </div>
+
+  <!-- ── Log ──────────────────────────────────────────────── -->
+  <div id="view-log" style="display:none" class="log-view">
+    <div id="log-container"></div>
+  </div>
+
+  <!-- ── Settings ─────────────────────────────────────────── -->
+  <div id="view-settings" style="display:none" class="settings-view">
+
+    <div class="setting-block">
+      <span class="field-label">Anthropic API Key</span>
+      <div class="setting-card">
+        <p class="setting-desc">Get your key from console.anthropic.com. It stays on your device.</p>
+        <input type="password" class="setting-input" id="api-key-input" placeholder="sk-ant-..." />
+        <button class="setting-save" onclick="saveKey()">Save key</button>
+      </div>
+    </div>
+
+    <div class="setting-block">
+      <span class="field-label">Your log</span>
+      <div class="setting-card">
+        <div class="stat-row"><span class="stat-key">Entries</span><span class="stat-val" id="s-entries">0</span></div>
+        <div class="stat-row"><span class="stat-key">Calendar events</span><span class="stat-val" id="s-cal">0</span></div>
+        <div class="stat-row"><span class="stat-key">Notes saved</span><span class="stat-val" id="s-notes">0</span></div>
+        <div class="stat-row"><span class="stat-key">Using since</span><span class="stat-val" id="s-since">—</span></div>
+      </div>
+    </div>
+
+    <div class="setting-block">
+      <span class="field-label">Google Calendar</span>
+      <div class="setting-card">
+        <p class="setting-desc" id="gcal-status">Connect to automatically add events to your calendar</p>
+        <button class="setting-save" id="gcal-btn" onclick="googleSignIn()" style="background:var(--surface);border:1px solid var(--border2);color:var(--cream2);padding:10px 20px;border-radius:10px;font-size:12px;letter-spacing:0.5px;text-transform:uppercase;cursor:pointer;transition:all 0.2s;">Connect Google Calendar</button>
+      </div>
+    </div>
+
+    <div class="setting-block">
+      <span class="field-label">About</span>
+      <div class="setting-card">
+        <p class="about-text">Her is a private space to hold the things that matter about the person you love. Everything stays on your device.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="safe-bottom"></div>
+</div>
+
+<script>
+  // ── Config ─────────────────────────────────────────────────
+  const GOOGLE_CLIENT_ID = '236478388027-7jermggkrob14oc74qj6e62vrlrr7beh.apps.googleusercontent.com';
+  const GCAL_SCOPE = 'https://www.googleapis.com/auth/calendar.events';
+
+  let gAccessToken = null;
+
+  function googleSignIn() {
+    const client = google.accounts.oauth2.initTokenClient({
+      client_id: GOOGLE_CLIENT_ID,
+      scope: GCAL_SCOPE,
+      callback: (resp) => {
+        if (resp.access_token) {
+          gAccessToken = resp.access_token;
+          localStorage.setItem('her-gcal-token', resp.access_token);
+          updateCalendarUI(true);
+        }
+      }
+    });
+    client.requestAccessToken();
+  }
+
+  function updateCalendarUI(connected) {
+    const btn = document.getElementById('gcal-btn');
+    const status = document.getElementById('gcal-status');
+    if (connected) {
+      btn.textContent = 'Connected';
+      btn.style.background = '#2a3a1a';
+      btn.style.borderColor = '#3a5a2a';
+      btn.style.color = '#7a9a68';
+      status.textContent = 'Events will be added to your Google Calendar';
+      status.style.color = 'var(--green2)';
+    } else {
+      btn.textContent = 'Connect Google Calendar';
+      btn.style.background = '';
+      btn.style.borderColor = '';
+      btn.style.color = '';
+      status.textContent = 'Connect to automatically add events to your calendar';
+      status.style.color = 'var(--text3)';
+    }
+  }
+
+  async function addToGoogleCalendar(action) {
+    const token = gAccessToken || localStorage.getItem('her-gcal-token');
+    if (!token) return false;
+
+    const startDate = action.date;
+    // next day for end date
+    const end = new Date(startDate);
+    end.setDate(end.getDate() + 1);
+    const endDate = end.toISOString().split('T')[0];
+
+    const event = {
+      summary: action.title,
+      description: action.description || '',
+      start: { date: startDate },
+      end:   { date: endDate },
+      reminders: {
+        useDefault: false,
+        overrides: [
+          { method: 'email', minutes: (action.reminderDays || 2) * 24 * 60 },
+          { method: 'popup', minutes: (action.reminderDays || 2) * 24 * 60 }
+        ]
+      }
+    };
+
+    const resp = await fetch('https://www.googleapis.com/calendar/v3/calendars/primary/events', {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + token,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(event)
+    });
+
+    if (resp.status === 401) {
+      // Token expired — clear and prompt re-auth
+      gAccessToken = null;
+      localStorage.removeItem('her-gcal-token');
+      updateCalendarUI(false);
+      return false;
+    }
+
+    return resp.ok;
+  }
+
+  // ── State ──────────────────────────────────────────────────
+  let imgB64 = null, imgType = null, pdfB64 = null;
+  let recog = null, recording = false, voiceText = '';
+
+  const LS_LOG   = 'her-log-v2';
+  const LS_KEY   = 'her-api-key';
+  const LS_STATS = 'her-stats-v2';
+
+  const getLog   = () => { try { return JSON.parse(localStorage.getItem(LS_LOG) || '[]'); } catch { return []; } };
+  const saveLog  = l => localStorage.setItem(LS_LOG, JSON.stringify(l));
+  const getKey   = () => localStorage.getItem(LS_KEY) || '';
+  const getStats = () => { try { return JSON.parse(localStorage.getItem(LS_STATS) || '{"entries":0,"cal":0,"notes":0,"since":null}'); } catch { return {entries:0,cal:0,notes:0,since:null}; } };
+  const saveStats= s => localStorage.setItem(LS_STATS, JSON.stringify(s));
+
+  // ── Init ───────────────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('date-sub').textContent = new Date().toLocaleDateString('en-AU', {
+      weekday: 'long', day: 'numeric', month: 'long'
+    });
+    const k = getKey();
+    if (k) document.getElementById('api-key-input').value = k;
+
+    // Restore calendar token if exists
+    const savedToken = localStorage.getItem('her-gcal-token');
+    if (savedToken) { gAccessToken = savedToken; updateCalendarUI(true); }
+  });
+
+  // ── Tabs ───────────────────────────────────────────────────
+  function switchTab(tab) {
+    ['capture','log','settings'].forEach((t,i) => {
+      document.getElementById('view-' + t).style.display = t === tab ? (t === 'capture' ? 'block' : 'block') : 'none';
+      document.querySelectorAll('.nav-tab')[i].classList.toggle('active', t === tab);
+    });
+    if (tab === 'log') renderLog();
+    if (tab === 'settings') renderStats();
+  }
+
+  // ── Upload ─────────────────────────────────────────────────
+  function triggerUpload() { document.getElementById('file-input').click(); }
+
+  function handleFile(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = ev => {
+      const b64 = ev.target.result.split(',')[1];
+      if (file.type === 'application/pdf') {
+        pdfB64 = b64; imgB64 = null; imgType = null;
+        document.getElementById('pdf-indicator').style.display = 'flex';
+        document.getElementById('img-preview').style.display = 'none';
+      } else {
+        imgB64 = b64; imgType = file.type; pdfB64 = null;
+        document.getElementById('preview-img').src = ev.target.result;
+        document.getElementById('img-preview').style.display = 'block';
+        document.getElementById('pdf-indicator').style.display = 'none';
+      }
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function clearMedia() {
+    imgB64 = null; imgType = null; pdfB64 = null;
+    document.getElementById('img-preview').style.display = 'none';
+    document.getElementById('pdf-indicator').style.display = 'none';
+    document.getElementById('file-input').value = '';
+  }
+
+  // ── Voice ──────────────────────────────────────────────────
+  function toggleVoice() {
+    if (recording) { stopVoice(); return; }
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SR) { alert('Voice input needs Chrome on Android.'); return; }
+    recog = new SR();
+    recog.continuous = true;
+    recog.interimResults = true;
+    recog.onresult = e => {
+      let t = '';
+      for (let i = 0; i < e.results.length; i++) t += e.results[i][0].transcript;
+      voiceText = t;
+    };
+    recog.onerror = recog.onend = () => { if (recording) stopVoice(); };
+    recog.start();
+    recording = true;
+    document.getElementById('voice-bar').style.display = 'flex';
+    document.getElementById('voice-btn').classList.add('recording');
+  }
+
+  function stopVoice() {
+    if (recog) recog.stop();
+    recording = false;
+    document.getElementById('voice-bar').style.display = 'none';
+    document.getElementById('voice-btn').classList.remove('recording');
+    if (voiceText) {
+      const ta = document.getElementById('main-input');
+      ta.value = (ta.value + ' ' + voiceText).trim();
+      voiceText = '';
+    }
+  }
+
+  // ── Send ───────────────────────────────────────────────────
+  async function handleSend() {
+    const text = document.getElementById('main-input').value.trim();
+    if (!text && !imgB64 && !pdfB64) return;
+
+    const key = getKey();
+    if (!key) { alert('Add your Anthropic API key in Settings first.'); switchTab('settings'); return; }
+
+    document.getElementById('processing').style.display = 'flex';
+    document.getElementById('result').style.display = 'none';
+    document.getElementById('cta').disabled = true;
+
+    try {
+      const res = await callClaude(text, key);
+      renderResult(res);
+      persist(text, res);
+
+      // Add calendar/reminder events to Google Calendar
+      if (gAccessToken || localStorage.getItem('her-gcal-token')) {
+        const calActions = (res.actions || []).filter(a => a.type === 'calendar' || a.type === 'reminder');
+        for (const action of calActions) {
+          await addToGoogleCalendar(action);
+        }
+      }
+    } catch(err) {
+      const r = document.getElementById('result');
+      r.style.display = 'block';
+      r.innerHTML = `<div class="result-summary">Something went wrong: ${err.message}</div>`;
+    }
+
+    document.getElementById('processing').style.display = 'none';
+    document.getElementById('cta').disabled = false;
+  }
+
+  // ── Claude ─────────────────────────────────────────────────
+  async function callClaude(text, key) {
+    const today = new Date().toDateString();
+    const sys = `You are a quiet assistant helping someone be more present for his partner Chin. He captures things she tells him so he does not forget. Today is ${today}.
+
+Respond ONLY with valid JSON, no extra text:
+{
+  "summary": "One gentle sentence about what this is",
+  "actions": [
+    { "type": "calendar", "title": "...", "date": "YYYY-MM-DD", "description": "...", "reminderDays": 2 },
+    { "type": "note",     "title": "...", "content": "..." },
+    { "type": "reminder", "title": "...", "date": "YYYY-MM-DD", "description": "..." }
+  ],
+  "logEntry": "A short human note — what was shared, warmly"
+}
+
+Rules:
+- Extract all dates (festivals, plans, outings, family events, visits)
+- If timing implied but no exact date, estimate YYYY-MM-DD
+- Festivals without year → use 2026
+- Emotionally significant things → note
+- Always write a logEntry
+- Be concise and warm, never clinical`;
+
+    const blocks = [];
+    if (text) blocks.push({ type: 'text', text: `He captured this:\n\n${text}` });
+    if (imgB64 && imgType) blocks.push({ type: 'image', source: { type: 'base64', media_type: imgType, data: imgB64 } });
+    if (pdfB64) blocks.push({ type: 'document', source: { type: 'base64', media_type: 'application/pdf', data: pdfB64 } });
+    if ((imgB64 || pdfB64) && !text) blocks.push({ type: 'text', text: 'Read this carefully and extract all relevant information.' });
+
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'x-api-key': key, 'anthropic-version': '2023-06-01' },
+      body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 1000, system: sys, messages: [{ role: 'user', content: blocks }] })
+    });
+
+    const data = await resp.json();
+    if (data.error) throw new Error(data.error.message);
+    const raw = data.content[0].text.trim().replace(/```json|```/g, '').trim();
+    return JSON.parse(raw);
+  }
+
+  // ── Render result ──────────────────────────────────────────
+  function renderResult(res) {
+    const r = document.getElementById('result');
+    r.style.display = 'block';
+
+    const typeLabel = { calendar: 'Added to calendar', note: 'Saved note', reminder: 'Reminder set' };
+    const items = (res.actions || []).map(a =>
+      `<div class="result-item"><div class="result-item-dot"></div><span>${typeLabel[a.type] || a.type}: ${a.title}${a.date ? ' — ' + fmt(a.date) : ''}</span></div>`
+    ).join('');
+
+    r.innerHTML = `
+      <div class="result-summary">${res.summary || ''}</div>
+      ${items ? `<div class="result-items">${items}</div>` : ''}
+    `;
+
+    document.getElementById('main-input').value = '';
+    clearMedia();
+  }
+
+  // ── Persist ────────────────────────────────────────────────
+  function persist(text, res) {
+    const log = getLog();
+    log.unshift({
+      id: Date.now().toString(),
+      date: new Date().toISOString(),
+      text,
+      hasMedia: !!(imgB64 || pdfB64),
+      summary: res.summary,
+      logEntry: res.logEntry,
+      actions: res.actions || []
+    });
+    saveLog(log);
+
+    const s = getStats();
+    if (!s.since) s.since = new Date().toISOString();
+    s.entries++;
+    (res.actions || []).forEach(a => {
+      if (a.type === 'calendar' || a.type === 'reminder') s.cal++;
+      if (a.type === 'note') s.notes++;
+    });
+    saveStats(s);
+  }
+
+  // ── Render log ─────────────────────────────────────────────
+  function renderLog() {
+    const log = getLog();
+    const c = document.getElementById('log-container');
+    if (!log.length) {
+      c.innerHTML = `<div class="log-empty">Nothing here yet.<br/>Start capturing what she tells you.</div>`;
+      return;
+    }
+    c.innerHTML = log.map(e => {
+      const d = new Date(e.date).toLocaleDateString('en-AU', { weekday: 'short', day: 'numeric', month: 'short' });
+      const tags = (e.actions || []).map(a => {
+        const cls = (a.type === 'calendar' || a.type === 'reminder') ? 'cal' : 'note';
+        const label = a.type === 'calendar' ? `Calendar — ${a.title}` : a.type === 'note' ? `Note — ${a.title}` : `Reminder — ${a.title}`;
+        return `<span class="log-tag ${cls}">${label}</span>`;
+      }).join('');
+      return `
+        <div class="log-entry">
+          <div class="log-meta">
+            <span class="log-date">${d}</span>
+            ${e.hasMedia ? '<span class="log-badge">Image</span>' : ''}
+          </div>
+          <div class="log-body">${e.logEntry || e.summary || e.text || ''}</div>
+          ${tags ? `<div class="log-tags">${tags}</div>` : ''}
+        </div>`;
+    }).join('');
+  }
+
+  // ── Stats ──────────────────────────────────────────────────
+  function renderStats() {
+    const s = getStats();
+    document.getElementById('s-entries').textContent = s.entries;
+    document.getElementById('s-cal').textContent     = s.cal;
+    document.getElementById('s-notes').textContent   = s.notes;
+    document.getElementById('s-since').textContent   = s.since
+      ? new Date(s.since).toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' })
+      : '—';
+  }
+
+  // ── Save key ───────────────────────────────────────────────
+  function saveKey() {
+    const k = document.getElementById('api-key-input').value.trim();
+    localStorage.setItem(LS_KEY, k);
+    alert('Saved.');
+  }
+
+  // ── Util ───────────────────────────────────────────────────
+  function fmt(d) {
+    try { return new Date(d).toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' }); }
+    catch { return d; }
+  }
+</script>
+</body>
+</html>
